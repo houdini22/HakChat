@@ -1,5 +1,5 @@
 var config = {
-    socketAddress: "http://localhost",
+    socketAddress: "https://localhost",
     socketPort: 12345
 };
 

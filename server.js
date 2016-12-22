@@ -1,6 +1,17 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var fs = require('fs');
+var https = require('https');
+var express = require('express');
+var app = express();
+
+var options = {
+    key: fs.readFileSync('./server/cert.pem'),
+    cert: fs.readFileSync('./server/cert.crt')
+};
+var serverPort = 12345;
+
+var server = https.createServer(options, app);
+var io = require('socket.io')(server);
+
 var conf = require('./src/config');
 var users = require('./server/users');
 var helpers = require('./server/helpers');
@@ -47,6 +58,6 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(conf.socketPort, function () {
-    console.log('listening on', conf.socketPort);
+server.listen(serverPort, function() {
+    console.log('server up and running at %s port', serverPort);
 });

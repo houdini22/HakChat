@@ -1,2 +1,4 @@
 .idea
 node_modules
+server/cert.pem
+server/cert.crt
