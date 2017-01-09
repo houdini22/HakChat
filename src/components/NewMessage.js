@@ -15,11 +15,6 @@ class NewMessageComponent extends React.Component {
 
     componentDidMount() {
         this.inputNewMessage.focus();
-
-        this.props.socket.on('join failed', () => {
-            this.inputNewMessage.disabled = "disabled";
-            this.inputNewMessage.value = "ERROR";
-        });
     }
 
     render() {

@@ -1,15 +1,41 @@
 import React from 'react';
 
 class StartScreen extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            errorMessage: null
+        };
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
         const nick = this.inputNick.value.trim();
         const password = this.inputPassword.value.trim();
 
-        this.props.connect(nick, password);
+        this.setState({errorMessage: null});
 
-        this.context.router.transitionTo('/chat');
+        this.props.socket.once('connect', () => {
+            let joined = () => {
+                this.props.connect(nick);
+                this.context.router.transitionTo('/chat');
+            };
+
+            this.props.socket.once('joined', joined);
+
+            this.props.socket.on('disconnect', () => {
+                this.props.socket.off('joined');
+                this.props.socket.disconnect();
+            });
+
+            this.props.socket.emit('join', {
+                nick: nick,
+                password: password
+            });
+        });
+
+        this.props.socket.connect();
     }
 
     render() {
@@ -33,9 +59,9 @@ class StartScreen extends React.Component {
                         />
                     </div>
                     <div className="has-button">
-                        <button type="submit">GO
-                        </button>
+                        <button type="submit">GO</button>
                     </div>
+                    {this.state.errorMessage}
                 </form>
             </div>
         )
@@ -44,10 +70,6 @@ class StartScreen extends React.Component {
 
 StartScreen.contextTypes = {
     router: React.PropTypes.object
-};
-
-StartScreen.propTypes = {
-    connect: React.PropTypes.func.isRequired
 };
 
 export default StartScreen;

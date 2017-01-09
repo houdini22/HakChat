@@ -1,6 +1,10 @@
 module.exports = [
     {
-        nick: "test",
-        password: "test123"
+        nick: "aaa",
+        password: "aaa"
+    },
+    {
+        nick: "bbb",
+        password: "bbb"
     }
 ];

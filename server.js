@@ -7,7 +7,6 @@ var options = {
     key: fs.readFileSync('./server/cert.pem'),
     cert: fs.readFileSync('./server/cert.crt')
 };
-var serverPort = 12345;
 
 var server = https.createServer(options, app);
 var io = require('socket.io')(server);
@@ -19,7 +18,7 @@ var helpers = require('./server/helpers');
 var connectedUsers = [];
 
 io.on('connection', function (socket) {
-    console.log('INFO: User Connected');
+    console.log('INFO: User Connected', socket.request.connection.remoteAddress);
     socket.on('join', function (user) {
         var joined = false;
         users.forEach(function (savedUser) {
@@ -38,12 +37,15 @@ io.on('connection', function (socket) {
         });
         if (!joined) {
             console.log('INFO: join failed');
-            socket.emit('join failed');
+            socket.disconnect();
+        } else {
+            io.emit('users', connectedUsers);
         }
         socket.on('disconnect', () => {
             for (let i = 0; i < connectedUsers.length; i += 1) {
                 if (connectedUsers[i].id === socket.id) {
                     connectedUsers.splice(i, 1);
+                    break;
                 }
             }
             io.emit('users', connectedUsers);
@@ -58,6 +60,6 @@ io.on('connection', function (socket) {
     });
 });
 
-server.listen(serverPort, function() {
-    console.log('server up and running at %s port', serverPort);
+server.listen(conf.socketPort, function() {
+    console.log('server up and running at %s port', conf.socketPort);
 });

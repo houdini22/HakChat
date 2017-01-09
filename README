@@ -1,0 +1,11 @@
+<root dir>
+npm install
+
+cd server
+openssl genrsa 1024 > cert.pem
+openssl req -new -key cert.pem -out csr.pem
+openssl x509 -req -days 365 -in csr.pem -signkey cert.pem -out cert.crt
+cd ..
+
+npm run build
+node server.js

@@ -14,6 +14,13 @@ class UsersJoinedComponent extends React.Component {
                 users
             });
         });
+        this.props.socket.on('disconnect', () => {
+            this.props.socket.off('users');
+        });
+    }
+
+    componentWillUnmount() {
+        this.props.socket.off('users');
     }
 
     render() {

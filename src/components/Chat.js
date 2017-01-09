@@ -1,8 +1,5 @@
 import React from 'react';
 
-import io from 'socket.io-client';
-import config from '../config';
-
 import NewMessageComponent from './NewMessage';
 import MessageComponent from './Message';
 import UsersJoinedComponent from './UsersJoined';
@@ -15,34 +12,27 @@ class ChatComponent extends React.Component {
             joined: false,
             usersJoined: []
         };
-
-        this.handleIncomingMessage = this.handleIncomingMessage.bind(this);
-
-        this.socket = io(config.socketAddress + ':' + config.socketPort, {
-            autoConnect: false
-        });
     }
 
     componentDidMount() {
-        if (this.props.nick && this.props.password) {
-            this.socket.on('chat message', (data) => {
+        if (this.props.socket.connected) {
+            this.props.socket.on('chat message', (data) => {
                 this.handleIncomingMessage(data);
             });
-            this.socket.emit('join', {
-                nick: this.props.nick,
-                password: this.props.password
-            });
-            this.socket.on('joined', () => {
-                this.socket.emit('get users');
-            });
-            this.socket.connect();
         } else {
             this.context.router.transitionTo("/");
         }
+
+        this.props.socket.on('disconnect', () => {
+            this.props.socket.off('chat message');
+            this.context.router.transitionTo('/');
+        });
+
+        this.props.socket.emit('get users');
     }
 
     handleNewMessage(message) {
-        this.socket.emit('message sent', {
+        this.props.socket.emit('message sent', {
             nick: this.props.nick,
             message: message
         });
@@ -79,11 +69,11 @@ class ChatComponent extends React.Component {
                     }
                 </div>
                 <UsersJoinedComponent
-                    socket={this.socket}
+                    socket={this.props.socket}
                 />
                 <NewMessageComponent
                     handleNewMessage={this.handleNewMessage.bind(this)}
-                    socket={this.socket}
+                    socket={this.props.socket}
                 />
             </div>
         );
