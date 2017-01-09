@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
             }
         });
         if (!joined) {
-            console.log('INFO: join failed');
+            console.log('INFO: join failed', user);
             socket.disconnect();
         } else {
             io.emit('users', connectedUsers);
