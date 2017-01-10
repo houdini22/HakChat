@@ -69,7 +69,7 @@ class StartScreen extends React.Component {
                     <div className="has-button">
                         <button type="submit">GO</button>
                     </div>
-                    {this.state.errorMessage}
+                    <p>{this.state.errorMessage}</p>
                 </form>
             </div>
         )

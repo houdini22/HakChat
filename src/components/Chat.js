@@ -2,7 +2,7 @@ import React from 'react';
 
 import NewMessageComponent from './NewMessage';
 import MessageComponent from './Message';
-import UsersJoinedComponent from './UsersJoined';
+import UsersJoinedComponent from './JoinedUsers';
 
 class ChatComponent extends React.Component {
     constructor() {

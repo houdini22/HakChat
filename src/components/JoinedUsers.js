@@ -1,5 +1,7 @@
 import React from 'react';
 
+import JoinedUserComponent from "./JoinedUser";
+
 class UsersJoinedComponent extends React.Component {
     constructor() {
         super();
@@ -30,14 +32,11 @@ class UsersJoinedComponent extends React.Component {
                 {
                     this.state.users.map((obj) => {
                         i++;
-                        return (
-                            <div className="connected-user" key={i}>
-                                <p>
-                                    <span className="nick">{obj.nick}</span>
-                                    <span className="ip">{obj.ip}</span>
-                                </p>
-                            </div>
-                        )
+                        return <JoinedUserComponent
+                            nick={obj.nick}
+                            ip={obj.ip}
+                            key={i}
+                        />;
                     })
                 }
             </div>

@@ -100,11 +100,17 @@ input {
   bottom: 35px;
   border-left: 1px solid #a9a9a9;
 }
-.chat-screen .users-joined p {
+.chat-screen .users-joined .connected-user {
+  cursor: pointer;
+}
+.chat-screen .users-joined .connected-user.is-active {
+  background-color: #d3d3d3;
+}
+.chat-screen .users-joined .connected-user p {
   padding: 2px 5px;
   font-size: 13px;
 }
-.chat-screen .users-joined p .ip {
+.chat-screen .users-joined .connected-user .ip {
   margin-left: 10px;
   font-size: 11px;
   color: #aaa;
