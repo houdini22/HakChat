@@ -1,0 +1,138 @@
+@import "_reset.scss";
+
+body, html {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+
+}
+
+//colors
+$color_shady_lady_approx: #a9a9a9;
+$color_plantation_approx: #2f4f4f;
+$color_quill_gray_approx: #d3d3d3;
+$color_silver_chalice_approx: #aaa;
+
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+input, button {
+  border: 1px solid $color_shady_lady_approx;
+  height: 25px;
+  line-height: 25px;
+  outline: 0 none;
+  color: $color_plantation_approx;
+  padding: 0 10px;
+  background: #fff;
+}
+.start-screen {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -150px;
+  border: 1px solid $color_shady_lady_approx;
+  text-align: center;
+  form > div {
+    &.has-input {
+      margin-bottom: 15px;
+      margin-top: 15px;
+    }
+    &.has-button {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+}
+.chat-screen {
+  width: 800px;
+  height: 600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -400px;
+  margin-top: -300px;
+  border: 1px solid $color_shady_lady_approx;
+  .new-message {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 35px;
+    line-height: 33px;
+    border-top: 1px solid $color_shady_lady_approx;
+    input {
+      width: calc(100% - 20px);
+      border: 0 none;
+      height: 35px;
+      line-height: 35px;
+    }
+  }
+  .messages {
+    position: absolute;
+    left: 0;
+    right: 200px;
+    top: 0;
+    bottom: 35px;
+    overflow: hidden;
+    overflow-y: scroll;
+    .message {
+      &.odd {
+        background: $color_quill_gray_approx;
+      }
+      p {
+        margin: 0;
+        padding: 2px 5px;
+        font-size: 13px;
+        > * {
+          display: inline-block;
+          margin-right: 10px;
+        }
+        .date {
+          color: $color_plantation_approx;
+        }
+        .nick {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .users-joined {
+    position: absolute;
+    width: 200px;
+    right: 0;
+    top: 0;
+    bottom: 35px;
+    border-left: 1px solid $color_shady_lady_approx;
+    .connected-user {
+      cursor: pointer;
+      &.is-active {
+        background-color: $color_quill_gray_approx;
+      }
+      p {
+        padding: 2px 5px;
+        font-size: 13px;
+      }
+      .ip {
+        margin-left: 10px;
+        font-size: 11px;
+        color: $color_silver_chalice_approx;
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import "./css/style.css";
+import "./scss/screen.scss";
 
 import {BrowserRouter, Match, Miss} from 'react-router';
 

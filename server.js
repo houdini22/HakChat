@@ -11,7 +11,7 @@ var options = {
 var server = https.createServer(options, app);
 var io = require('socket.io')(server);
 
-var conf = require('./src/config');
+var conf = require('./app/config');
 var users = require('./server/users');
 var helpers = require('./server/helpers');
 
