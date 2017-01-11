@@ -7,41 +7,23 @@ import UsersJoinedComponent from './JoinedUsers';
 class ChatComponent extends React.Component {
     constructor() {
         super();
-        this.state = {
-            messages: [],
-            joined: false,
-            usersJoined: []
-        };
     }
 
     componentDidMount() {
         if (this.props.socket.connected) {
             this.props.socket.on('chat message', (data) => {
-                this.handleIncomingMessage(data);
+                this.props.messageReceived(data);
             });
         } else {
-            this.context.router.transitionTo("/");
+            this.props.router.push("/");
         }
 
         this.props.socket.on('disconnect', () => {
             this.props.socket.off('chat message');
-            this.context.router.transitionTo('/');
+            this.props.router.push('/');
         });
 
         this.props.socket.emit('get users');
-    }
-
-    handleNewMessage(message) {
-        this.props.socket.emit('message sent', {
-            nick: this.props.nick,
-            message: message
-        });
-    }
-
-    handleIncomingMessage(data) {
-        var messages = [...this.state.messages];
-        messages.push(data);
-        this.setState({messages});
     }
 
     componentDidUpdate() {
@@ -58,22 +40,22 @@ class ChatComponent extends React.Component {
                      }}
                 >
                     {
-                        this.state.messages.map((message) => {
+                        this.props.messages.map((message) => {
                             i++;
                             return <MessageComponent
                                 message={message}
                                 key={i}
                                 index={i}
+                                {...this.props}
                             />
                         })
                     }
                 </div>
                 <UsersJoinedComponent
-                    socket={this.props.socket}
+                    {...this.props}
                 />
                 <NewMessageComponent
-                    handleNewMessage={this.handleNewMessage.bind(this)}
-                    socket={this.props.socket}
+                    {...this.props}
                 />
             </div>
         );

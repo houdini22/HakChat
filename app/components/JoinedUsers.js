@@ -2,19 +2,14 @@ import React from 'react';
 
 import JoinedUserComponent from "./JoinedUser";
 
-class UsersJoinedComponent extends React.Component {
+class JoinedUsersComponent extends React.Component {
     constructor() {
         super();
-        this.state = {
-            users: []
-        };
     }
 
     componentDidMount() {
         this.props.socket.on('users', (users) => {
-            this.setState({
-                users
-            });
+            this.props.usersListChanged(users);
         });
         this.props.socket.on('disconnect', () => {
             this.props.socket.off('users');
@@ -30,7 +25,7 @@ class UsersJoinedComponent extends React.Component {
         return (
             <div className="users-joined">
                 {
-                    this.state.users.map((obj) => {
+                    this.props.usersJoined.map((obj) => {
                         i++;
                         return <JoinedUserComponent
                             nick={obj.nick}
@@ -44,8 +39,8 @@ class UsersJoinedComponent extends React.Component {
     }
 }
 
-UsersJoinedComponent.propTypes = {
+JoinedUsersComponent.propTypes = {
     socket: React.PropTypes.object.isRequired
 };
 
-export default UsersJoinedComponent;
+export default JoinedUsersComponent;

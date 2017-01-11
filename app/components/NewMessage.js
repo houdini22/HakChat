@@ -6,7 +6,10 @@ class NewMessageComponent extends React.Component {
         const message = input.value.trim();
 
         if (e.keyCode === 13 && message.length) {
-            this.props.handleNewMessage(message);
+            this.props.socket.emit('message sent', {
+                nick: this.props.nick,
+                message: message
+            });
 
             input.value = "";
             input.focus();
@@ -37,7 +40,6 @@ class NewMessageComponent extends React.Component {
 }
 
 NewMessageComponent.propTypes = {
-    handleNewMessage: React.PropTypes.func.isRequired,
     socket: React.PropTypes.object.isRequired
 };
 

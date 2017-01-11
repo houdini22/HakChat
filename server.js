@@ -51,13 +51,13 @@ io.on('connection', function (socket) {
         } else {
             io.emit('users', connectedUsers);
         }
-    });
-    socket.on('message sent', function (data) {
-        data.date = helpers.getCurrentHour();
-        io.emit('chat message', data);
-    });
-    socket.on('get users', () => {
-        socket.emit('users', connectedUsers);
+        socket.on('message sent', function (data) {
+            data.date = helpers.getCurrentHour();
+            io.emit('chat message', data);
+        });
+        socket.on('get users', () => {
+            socket.emit('users', connectedUsers);
+        });
     });
 });
 
