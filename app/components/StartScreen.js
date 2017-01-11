@@ -11,9 +11,17 @@ class StartScreen extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        this.setState({errorMessage: null});
+        const nick = this.inputNick.value.trim();
+        const password = this.inputPassword.value.trim();
 
-        this.props.socket.once('connect', () => {
+        localStorage.setItem("HakChat", JSON.stringify({nick, password}));
+
+        this.setState({errorMessage: null});
+        this.props.socket.connect();
+    }
+
+    componentWillMount() {
+        this.props.socket.on('connect', () => {
 
             const nick = this.inputNick.value.trim();
             const password = this.inputPassword.value.trim();
@@ -38,8 +46,6 @@ class StartScreen extends React.Component {
                 password: password
             });
         });
-
-        this.props.socket.connect();
     }
 
     componentWillUnmount() {
@@ -47,6 +53,11 @@ class StartScreen extends React.Component {
     }
 
     render() {
+        let data = JSON.parse(localStorage.getItem('HakChat') || '{}');
+
+        const nick = data.nick || '';
+        const password = data.password || '';
+
         return (
             <div className="start-screen">
                 <form onSubmit={(e) => {
@@ -57,6 +68,7 @@ class StartScreen extends React.Component {
                                ref={(input) => {
                                    this.inputNick = input;
                                }}
+                               defaultValue={nick}
                         />
                     </div>
                     <div className="has-input">
@@ -64,6 +76,7 @@ class StartScreen extends React.Component {
                                ref={(input) => {
                                    this.inputPassword = input;
                                }}
+                               defaultValue={password}
                         />
                     </div>
                     <div className="has-button">

@@ -32,15 +32,10 @@ io.on('connection', function (socket) {
                     ip: socket.request.connection.remoteAddress
                 });
                 joined = true;
-                console.log('INFO:', user.nick, 'joined');
+                console.log('INFO:', user.nick, 'joined', socket.request.connection.remoteAddress);
+                return false;
             }
         });
-        if (!joined) {
-            console.log('INFO: join failed', user);
-            socket.disconnect();
-        } else {
-            io.emit('users', connectedUsers);
-        }
         socket.on('disconnect', () => {
             for (let i = 0; i < connectedUsers.length; i += 1) {
                 if (connectedUsers[i].id === socket.id) {
@@ -50,9 +45,15 @@ io.on('connection', function (socket) {
             }
             io.emit('users', connectedUsers);
         });
+        if (!joined) {
+            console.log('INFO: join failed', user);
+            socket.disconnect();
+        } else {
+            io.emit('users', connectedUsers);
+        }
     });
     socket.on('message sent', function (data) {
-        data.date = helpers.getCurrentDate();
+        data.date = helpers.getCurrentHour();
         io.emit('chat message', data);
     });
     socket.on('get users', () => {
@@ -60,6 +61,6 @@ io.on('connection', function (socket) {
     });
 });
 
-server.listen(conf.socketPort, function() {
+server.listen(conf.socketPort, function () {
     console.log('server up and running at %s port', conf.socketPort);
 });
