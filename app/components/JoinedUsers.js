@@ -28,6 +28,7 @@ class JoinedUsersComponent extends React.Component {
                     this.props.usersJoined.map((obj) => {
                         i++;
                         return <JoinedUserComponent
+                            {...this.props}
                             nick={obj.nick}
                             ip={obj.ip}
                             key={i}

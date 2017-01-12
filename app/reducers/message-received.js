@@ -1,5 +1,5 @@
 function messageReceived(state = [], action) {
-    if(action.type === "MESSAGE_RECEIVED") {
+    if (action.type === "MESSAGE_RECEIVED") {
         let newState = [...state];
         newState.push(action.message);
         return newState;

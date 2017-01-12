@@ -17,7 +17,7 @@ const router = (
         <Router history={history} key={new Date()}>
             <Route component={AppComponent} path="/">
                 <IndexRoute component={StartScreenComponent}/>
-                <Route path="/chat" component={ChatComponent } />
+                <Route path="/chat" component={ChatComponent }/>
             </Route>
         </Router>
     </Provider>

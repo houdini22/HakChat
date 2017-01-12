@@ -1,4 +1,5 @@
 import React from 'react';
+import LocaleStorageWrapper from '../classes/LocalStorageWrapper';
 
 class StartScreen extends React.Component {
     constructor() {
@@ -6,6 +7,7 @@ class StartScreen extends React.Component {
         this.state = {
             errorMessage: null
         };
+        this.localeStorageWrapper = new LocaleStorageWrapper();
     }
 
     handleSubmit(e) {
@@ -14,7 +16,7 @@ class StartScreen extends React.Component {
         const nick = this.inputNick.value.trim();
         const password = this.inputPassword.value.trim();
 
-        localStorage.setItem("HakChat", JSON.stringify({nick, password}));
+        this.localeStorageWrapper.setByPath('userData', {nick, password}).save();
 
         this.setState({errorMessage: null});
         this.props.socket.connect();
@@ -53,10 +55,7 @@ class StartScreen extends React.Component {
     }
 
     render() {
-        let data = JSON.parse(localStorage.getItem('HakChat') || '{}');
-
-        const nick = data.nick || '';
-        const password = data.password || '';
+        let {nick, password} = this.localeStorageWrapper.getByPath('userData', {});
 
         return (
             <div className="start-screen">

@@ -1,4 +1,5 @@
 import React from 'react';
+import {userClick as userClickAction} from '../actions/actionCreators';
 
 class NewMessageComponent extends React.Component {
     handleKeyUp(e) {
@@ -18,6 +19,14 @@ class NewMessageComponent extends React.Component {
 
     componentDidMount() {
         this.inputNewMessage.focus();
+
+        this.unsubscribeMessageTo = this.props.store.subscribe(() => {
+
+        });
+    }
+
+    componentWillUnmount() {
+        this.unsubscribeMessageTo();
     }
 
     render() {

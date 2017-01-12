@@ -35,18 +35,18 @@ class ChatComponent extends React.Component {
         return (
             <div className="chat-screen">
                 <div className="messages"
-                     ref={(div) => {
-                         this.messageDiv = div;
+                     ref={(input) => {
+                         this.messageDiv = input;
                      }}
                 >
                     {
                         this.props.messages.map((message) => {
                             i++;
                             return <MessageComponent
+                                {...this.props}
                                 message={message}
                                 key={i}
                                 index={i}
-                                {...this.props}
                             />
                         })
                     }

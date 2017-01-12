@@ -6,7 +6,8 @@ import rootReducer from './reducers/index';
 const defaultState = {
     messages: [],
     usersJoined: [],
-    nick: null
+    nick: null,
+    messageTo: false
 };
 
 const store = createStore(rootReducer, defaultState);

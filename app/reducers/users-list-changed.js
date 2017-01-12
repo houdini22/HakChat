@@ -1,5 +1,5 @@
 function usersListChanged(state = [], action) {
-    if(action.type === 'USERS_LIST_CHANGED') {
+    if (action.type === 'USERS_LIST_CHANGED') {
         let newState = [...action.users];
         return newState;
     }

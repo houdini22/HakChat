@@ -21,3 +21,10 @@ export function userLoggedIn(nick) {
         nick
     };
 }
+
+export function userClick(nick) {
+    return {
+        type: 'USER_CLICK',
+        nick
+    };
+}
