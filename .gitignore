@@ -2,3 +2,5 @@
 node_modules
 server/cert.pem
 server/cert.crt
+public/static/js/bundle.js
+public/static/js/bundle.js.map
