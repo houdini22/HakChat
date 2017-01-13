@@ -1,16 +1,42 @@
 import React from 'react';
-import {userClick as userClickAction} from '../actions/actionCreators';
 
 class NewMessageComponent extends React.Component {
+    constructor() {
+        super();
+        this.timeout = null;
+    }
+
     handleKeyUp(e) {
         const input = e.target;
         const message = input.value.trim();
 
+        if (!this.userTyping) {
+            this.props.socket.emit('user start typing', {
+                nick: this.props.nick
+            });
+            this.userTyping = true;
+        }
+
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
+
+        this.timeout = setTimeout(() => {
+            this.props.socket.emit('user stops typing', {
+                nick: this.props.nick
+            });
+            this.userTyping = false;
+        }, 2000);
+
         if (e.keyCode === 13 && message.length) {
+            clearTimeout(this.timeout);
+
             this.props.socket.emit('message sent', {
                 nick: this.props.nick,
                 message: message
             });
+
+            this.userTyping = false;
 
             input.value = "";
             input.focus();
@@ -19,14 +45,9 @@ class NewMessageComponent extends React.Component {
 
     componentDidMount() {
         this.inputNewMessage.focus();
-
-        this.unsubscribeMessageTo = this.props.store.subscribe(() => {
-
-        });
     }
 
     componentWillUnmount() {
-        this.unsubscribeMessageTo();
     }
 
     render() {

@@ -106,7 +106,7 @@ input, button {
           margin-right: 6px;
         }
         .date {
-          color: $color_plantation_approx;
+
         }
         .nick {
           font-weight: bold;
@@ -128,6 +128,9 @@ input, button {
       cursor: pointer;
       &.is-active {
         background-color: $color_quill_gray_approx;
+      }
+      &.is-typing {
+        background: lightskyblue;
       }
       p {
         padding: 2px 5px;

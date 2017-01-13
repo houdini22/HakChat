@@ -35,7 +35,8 @@ class SocketIOWrapper {
         for (let user of this.joinedUsers) {
             users.push({
                 nick: user.nick,
-                ip: user.ip
+                ip: user.ip,
+                isTyping: user.isTyping
             });
         }
         return users;
@@ -50,6 +51,24 @@ class SocketIOWrapper {
             }
         }
         return res;
+    }
+
+    userStartsTyping(nick) {
+        for (let userObj of this.joinedUsers) {
+            if (userObj.nick === nick) {
+                userObj.isTyping = true;
+                break;
+            }
+        }
+    }
+
+    userStopsTyping(nick) {
+        for (let userObj of this.joinedUsers) {
+            if (userObj.nick === nick) {
+                userObj.isTyping = false;
+                break;
+            }
+        }
     }
 
     bindEvents() {
@@ -78,11 +97,21 @@ class SocketIOWrapper {
                 }
                 socket.on('message sent', (data) => {
                     data.date = helpers.getCurrentHour();
+                    this.userStopsTyping(data.nick);
                     this.io.emit('chat message', data);
+                    this.io.emit('users', this.getConnectedUsers());
                 });
                 socket.on('get users', () => {
                     socket.emit('users', this.getConnectedUsers());
                 });
+                socket.on('user start typing', (data) => {
+                    this.userStartsTyping(data.nick);
+                    this.io.emit('users', this.getConnectedUsers());
+                });
+                socket.on('user stops typing', (data) => {
+                    this.userStopsTyping(data.nick);
+                    this.io.emit('users', this.getConnectedUsers());
+                })
             });
         });
     }

@@ -31,6 +31,7 @@ class JoinedUsersComponent extends React.Component {
                             {...this.props}
                             nick={obj.nick}
                             ip={obj.ip}
+                            isTyping={obj.isTyping}
                             key={i}
                         />;
                     })

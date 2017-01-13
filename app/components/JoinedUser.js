@@ -21,6 +21,9 @@ class JoinedUserComponent extends React.Component {
         if (this.state.active === true) {
             classes.push('is-active');
         }
+        if (this.props.isTyping) {
+            classes.push('is-typing');
+        }
         return (
             <div
                 className={classes.join(' ')}
