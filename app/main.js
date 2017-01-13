@@ -18,6 +18,7 @@ const router = (
             <Route component={AppComponent} path="/">
                 <IndexRoute component={StartScreenComponent}/>
                 <Route path="/chat" component={ChatComponent }/>
+                <Route path="*" component={NotFoundComponent}/>
             </Route>
         </Router>
     </Provider>
