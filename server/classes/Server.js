@@ -26,8 +26,7 @@ class Server {
 
     start() {
         this.httpsServer.listen(this.config.socketPort, () => {
-            //helpers.log('Server up and running at port:', this.config.socketPort);
-            console.log('Server up and running');
+            helpers.log('Server up and running at port:', this.config.socketPort);
             this.socketIOWrapper.startListening();
         });
     }

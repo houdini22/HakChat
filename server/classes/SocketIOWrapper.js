@@ -23,7 +23,7 @@ class SocketIOWrapper {
         for (let i = 0; i < this.joinedUsers.length; i += 1) {
             let user = this.joinedUsers[i];
             if (user.id === socketId) {
-                this.joinedUsers.split(i, 1);
+                this.joinedUsers.splice(i, 1);
                 break;
             }
         }
@@ -67,6 +67,7 @@ class SocketIOWrapper {
                     helpers.log('INFO:', user.nick, 'joined', socket.request.connection.remoteAddress);
                 }
                 socket.on('disconnect', () => {
+                    helpers.log('INFO:', user.nick, 'disconnected', socket.request.connection.remoteAddress);
                     this.userDisconnected(socket.id);
                     this.io.emit('users', this.getConnectedUsers());
                 });

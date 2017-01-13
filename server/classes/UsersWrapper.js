@@ -1,13 +1,13 @@
-let UsersGetter = require('./UsersGetter');
+let UsersFetcher = require('./UsersFetcher');
 
 class UsersWrapper {
     constructor() {
-        this.usersGetter = new UsersGetter();
+        this.usersFetcher = new UsersFetcher();
         this.users = [];
     }
 
     fetch(callback) {
-        this.usersGetter.fetch((users) => {
+        this.usersFetcher.fetch((users) => {
             this.users = users;
             callback();
         });
