@@ -83,12 +83,24 @@ class SocketIOWrapper {
                         id: socket.id,
                         ip: socket.request.connection.remoteAddress
                     });
+                    this.io.emit('system message', {
+                        type: 'SYSTEM_MESSAGE',
+                        subType: 'USER_JOINED',
+                        nick: user.nick,
+                        date: helpers.getCurrentHour()
+                    });
                     helpers.log('INFO:', user.nick, 'joined', socket.request.connection.remoteAddress);
                 }
                 socket.on('disconnect', () => {
                     helpers.log('INFO:', user.nick, 'disconnected', socket.request.connection.remoteAddress);
                     this.userDisconnected(socket.id);
                     this.io.emit('users', this.getConnectedUsers());
+                    this.io.emit('system message', {
+                        type: 'SYSTEM_MESSAGE',
+                        subType: 'USER_DISCONNECTED',
+                        nick: user.nick,
+                        date: helpers.getCurrentHour()
+                    });
                 });
                 if (!this.isUserJoined(user.nick)) {
                     socket.disconnect();

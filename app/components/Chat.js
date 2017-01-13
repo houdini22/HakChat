@@ -14,6 +14,9 @@ class ChatComponent extends React.Component {
             this.props.socket.on('chat message', (data) => {
                 this.props.messageReceived(data);
             });
+            this.props.socket.on('system message', (data) => {
+                this.props.messageReceived(data);
+            })
         } else {
             this.props.router.push("/");
         }
