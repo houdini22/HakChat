@@ -9,7 +9,7 @@ class JoinedUserComponent extends React.Component {
     }
 
     handleUserClick(e) {
-        this.props.userClick(this.messageDiv.getAttribute('data-user-nick'));
+        this.props.actions.userClick(this.messageDiv.getAttribute('data-user-nick'));
     }
 
     componentDidMount() {

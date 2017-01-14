@@ -12,7 +12,7 @@ class NewMessageComponent extends React.Component {
 
         if (!this.userTyping) {
             this.props.socket.emit('user start typing', {
-                nick: this.props.nick
+                nick: this.props.state.nick
             });
             this.userTyping = true;
         }
@@ -23,7 +23,7 @@ class NewMessageComponent extends React.Component {
 
         this.timeout = setTimeout(() => {
             this.props.socket.emit('user stops typing', {
-                nick: this.props.nick
+                nick: this.props.state.nick
             });
             this.userTyping = false;
         }, 2000);
@@ -32,7 +32,7 @@ class NewMessageComponent extends React.Component {
             clearTimeout(this.timeout);
 
             this.props.socket.emit('message sent', {
-                nick: this.props.nick,
+                nick: this.props.state.nick,
                 message: message
             });
 
@@ -68,9 +68,5 @@ class NewMessageComponent extends React.Component {
         );
     }
 }
-
-NewMessageComponent.propTypes = {
-    socket: React.PropTypes.object.isRequired
-};
 
 export default NewMessageComponent;

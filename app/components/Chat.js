@@ -12,10 +12,10 @@ class ChatComponent extends React.Component {
     componentDidMount() {
         if (this.props.socket.connected) {
             this.props.socket.on('chat message', (data) => {
-                this.props.messageReceived(data);
+                this.props.actions.messageReceived(data);
             });
             this.props.socket.on('system message', (data) => {
-                this.props.messageReceived(data);
+                this.props.actions.messageReceived(data);
             })
         } else {
             this.props.router.push("/");
@@ -44,7 +44,7 @@ class ChatComponent extends React.Component {
                      }}
                 >
                     {
-                        this.props.messages.map((message) => {
+                        this.props.state.messages.map((message) => {
                             i++;
                             return <MessageComponent
                                 {...this.props}
@@ -69,10 +69,6 @@ class ChatComponent extends React.Component {
 ChatComponent.propTypes = {
     nick: React.PropTypes.string,
     password: React.PropTypes.string
-};
-
-ChatComponent.contextTypes = {
-    router: React.PropTypes.object.isRequired
 };
 
 export default ChatComponent;

@@ -11,7 +11,7 @@ class MessageComponent extends React.Component {
             mainClassNames.push('even');
         }
 
-        let regex = new RegExp(`@(${this.props.nick})(\\s|$)`);
+        let regex = new RegExp(`@(${this.props.state.nick})(\\s|$)`);
         let hasNickInMessage = regex.test(message.message);
 
         if (hasNickInMessage) {

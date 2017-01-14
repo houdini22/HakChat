@@ -37,7 +37,7 @@ class StartScreen extends React.Component {
 
             let joined = () => {
                 this.props.socket.off('disconnect', disconnect);
-                this.props.userLoggedIn(nick);
+                this.props.actions.userLoggedIn(nick);
                 this.props.router.push('/chat');
             };
 
@@ -87,9 +87,5 @@ class StartScreen extends React.Component {
         )
     }
 }
-
-StartScreen.contextTypes = {
-    router: React.PropTypes.object
-};
 
 export default StartScreen;

@@ -5,9 +5,6 @@ var SocketIOWrapper = require('./SocketIOWrapper');
 class Server {
     constructor(config) {
         this.config = config;
-
-        this.startHttpsServer();
-        this.socketIOWrapper = new SocketIOWrapper(this.httpsServer);
     }
 
     startHttpsServer() {
@@ -25,6 +22,8 @@ class Server {
     }
 
     start() {
+        this.startHttpsServer();
+        this.socketIOWrapper = new SocketIOWrapper(this.httpsServer);
         this.httpsServer.listen(this.config.socketPort, () => {
             helpers.log('Server up and running at port:', this.config.socketPort);
             this.socketIOWrapper.startListening();

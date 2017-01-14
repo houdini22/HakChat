@@ -15,17 +15,23 @@ let socket = io(config.socketAddress + ':' + config.socketPort, {
 
 function mapStateToProps(state) {
     return {
-        messages: state.messages,
-        usersJoined: state.usersJoined,
-        nick: state.nick,
-        messageTo: state.messageTo,
+        state: {
+            messages: state.messages,
+            usersJoined: state.usersJoined,
+            nick: state.nick,
+            messageTo: state.messageTo
+        },
         socket,
         store
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({...actionCreators, dispatch}, dispatch);
+    let result = {actions: {}};
+    Object.keys(actionCreators).forEach((key) => {
+        result.actions[key] = bindActionCreators(actionCreators[key], dispatch);
+    });
+    return result;
 }
 
 const App = connect(mapStateToProps, mapDispatchToProps)(MainComponent);

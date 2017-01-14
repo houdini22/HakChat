@@ -9,7 +9,7 @@ class JoinedUsersComponent extends React.Component {
 
     componentDidMount() {
         this.props.socket.on('users', (users) => {
-            this.props.usersListChanged(users);
+            this.props.actions.usersListChanged(users);
         });
         this.props.socket.on('disconnect', () => {
             this.props.socket.off('users');
@@ -25,7 +25,7 @@ class JoinedUsersComponent extends React.Component {
         return (
             <div className="users-joined">
                 {
-                    this.props.usersJoined.sort((a, b) => {
+                    this.props.state.usersJoined.sort((a, b) => {
                         return a > b;
                     }).map((obj) => {
                         i++;
@@ -42,9 +42,5 @@ class JoinedUsersComponent extends React.Component {
         );
     }
 }
-
-JoinedUsersComponent.propTypes = {
-    socket: React.PropTypes.object.isRequired
-};
 
 export default JoinedUsersComponent;
