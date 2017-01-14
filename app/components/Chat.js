@@ -23,6 +23,7 @@ class ChatComponent extends React.Component {
 
         this.props.socket.on('disconnect', () => {
             this.props.socket.off('chat message');
+            this.props.socket.off('system message');
             this.props.router.push('/');
         });
 
