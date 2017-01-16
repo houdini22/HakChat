@@ -7,7 +7,7 @@ const defaultState = {
     messages: [],
     usersJoined: [],
     nick: null,
-    messageTo: false,
+    messageTo: '',
     usersTyping: []
 };
 

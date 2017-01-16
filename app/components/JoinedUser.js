@@ -9,11 +9,7 @@ class JoinedUserComponent extends React.Component {
     }
 
     handleUserClick(e) {
-        this.props.actions.userClick(this.messageDiv.getAttribute('data-user-nick'));
-    }
-
-    componentDidMount() {
-        this.messageDiv.setAttribute('data-user-nick', this.props.nick);
+        this.props.actions.userClick(this.props.nick);
     }
 
     render() {
@@ -35,9 +31,6 @@ class JoinedUserComponent extends React.Component {
                 }}
                 onMouseLeave={() => {
                     this.setState({active: false});
-                }}
-                ref={(input) => {
-                    this.messageDiv = input;
                 }}
             >
                 <p>

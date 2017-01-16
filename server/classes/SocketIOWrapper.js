@@ -39,6 +39,11 @@ class SocketIOWrapper {
                 isTyping: user.isTyping
             });
         }
+        users.sort((a, b) => {
+            if (a.nick < b.nick) return -1;
+            if (a.nick > b.nick) return 1;
+            return 0;
+        });
         return users;
     }
 

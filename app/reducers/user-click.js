@@ -1,4 +1,4 @@
-function userClick(state = false, action) {
+function userClick(state = '', action) {
     if (action.type === 'USER_CLICK') {
         return action.nick;
     }

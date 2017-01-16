@@ -25,9 +25,7 @@ class JoinedUsersComponent extends React.Component {
         return (
             <div className="users-joined">
                 {
-                    this.props.state.usersJoined.sort((a, b) => {
-                        return a > b;
-                    }).map((obj) => {
+                    this.props.state.usersJoined.map((obj) => {
                         i++;
                         return <JoinedUserComponent
                             {...this.props}
