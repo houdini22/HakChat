@@ -1,6 +1,11 @@
 import React from 'react';
 
 class MessageComponent extends React.Component {
+    constructor() {
+        super();
+        this.soundPlayed = false;
+    }
+
     renderChatMessage(message) {
         let odd = this.props.index % 2 === 0;
         let mainClassNames = ['message'];
@@ -11,11 +16,20 @@ class MessageComponent extends React.Component {
             mainClassNames.push('even');
         }
 
-        let regex = new RegExp(`@(${this.props.state.nick})(\\s|$)`);
+        let regex = new RegExp(`(@${this.props.state.nick}(\\s|$))`);
         let hasNickInMessage = regex.test(message.message);
 
         if (hasNickInMessage) {
             mainClassNames.push('has-nick');
+            if (!this.soundPlayed) {
+                this.soundPlayed = true;
+                try {
+                    this.audio = new Audio('/sounds/notification.mp3');
+                    this.audio.play();
+                } catch (ex) {
+
+                }
+            }
         }
 
         return (
