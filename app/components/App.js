@@ -19,7 +19,8 @@ function mapStateToProps(state) {
             messages: state.messages,
             usersJoined: state.usersJoined,
             nick: state.nick,
-            messageTo: state.messageTo
+            messageTo: state.messageTo,
+            windowState: state.windowState
         },
         socket,
         store

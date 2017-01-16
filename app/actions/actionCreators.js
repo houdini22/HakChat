@@ -28,3 +28,10 @@ export function userClick(nick) {
         nick
     };
 }
+
+export function windowState(state) {
+    return {
+        type: 'WINDOW_STATE',
+        state
+    };
+}
