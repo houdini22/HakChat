@@ -4,6 +4,7 @@ class Main extends React.Component {
     constructor() {
         super();
         this.documentTitleChanged = false;
+        this.isWindowFocused = true;
     }
 
     onChatMessage() {
