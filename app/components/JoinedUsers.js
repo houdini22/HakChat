@@ -21,18 +21,16 @@ class JoinedUsersComponent extends React.Component {
     }
 
     render() {
-        let i = 0;
         return (
             <div className="users-joined">
                 {
                     this.props.state.usersJoined.map((obj) => {
-                        i++;
                         return <JoinedUserComponent
                             {...this.props}
                             nick={obj.nick}
                             ip={obj.ip}
                             isTyping={obj.isTyping}
-                            key={i}
+                            key={obj.nick}
                         />;
                     })
                 }
