@@ -111,6 +111,12 @@ input, button {
         .nick {
           font-weight: bold;
         }
+        .message-content {
+          a {
+            color: black;
+            text-decoration: underline;
+          }
+        }
       }
       &.has-nick {
         background-color: lightskyblue;

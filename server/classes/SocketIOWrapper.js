@@ -128,7 +128,7 @@ class SocketIOWrapper {
                 socket.on('user stops typing', (data) => {
                     this.userStopsTyping(data.nick);
                     this.io.emit('users', this.getConnectedUsers());
-                })
+                });
             });
         });
     }

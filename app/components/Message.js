@@ -1,4 +1,5 @@
 import React from 'react';
+import Linkify from 'react-linkify';
 
 class MessageComponent extends React.Component {
     constructor() {
@@ -16,8 +17,8 @@ class MessageComponent extends React.Component {
             mainClassNames.push('even');
         }
 
-        let regex = new RegExp(`(@${this.props.state.nick}(\\s|$))`);
-        let hasNickInMessage = regex.test(message.message);
+        let nickRegex = new RegExp(`(@${this.props.state.nick}(\\s|$))`);
+        let hasNickInMessage = nickRegex.test(message.message);
 
         if (hasNickInMessage) {
             mainClassNames.push('has-nick');
@@ -37,7 +38,12 @@ class MessageComponent extends React.Component {
                 <p>
                     <span className="date">{message.date}</span>
                     <span className="nick">{message.nick}:</span>
-                    <span className="message-content">{message.message}</span>
+                    <span className="message-content">
+                        <Linkify
+                            properties={{target: "_blank"}}>
+                                {message.message}
+                        </Linkify>
+                    </span>
                 </p>
             </div>
         );
