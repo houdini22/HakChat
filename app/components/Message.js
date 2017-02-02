@@ -1,5 +1,6 @@
 import React from 'react';
 import Linkify from 'react-linkify';
+import {hasNickInMessageHelper} from '../helpers/chat-helper';
 
 class MessageComponent extends React.Component {
     constructor() {
@@ -17,20 +18,10 @@ class MessageComponent extends React.Component {
             mainClassNames.push('even');
         }
 
-        let nickRegex = new RegExp(`(@${this.props.state.nick}(\\s|$))`);
-        let hasNickInMessage = nickRegex.test(message.message);
+        let hasNickInMessage = hasNickInMessageHelper(this.props.state.nick, message.message);
 
         if (hasNickInMessage) {
             mainClassNames.push('has-nick');
-            if (!this.soundPlayed) {
-                this.soundPlayed = true;
-                try {
-                    this.audio = new Audio('/sounds/notification.mp3');
-                    this.audio.play();
-                } catch (ex) {
-
-                }
-            }
         }
 
         return (

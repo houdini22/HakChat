@@ -21,9 +21,13 @@ class ChannelTabComponent extends React.Component {
 
     render() {
         let pendingMessagesResult = '';
-        let pendingMessages = this.props.state.pendingMessages[this.props.channel.name];
-        if (pendingMessages) {
-            pendingMessagesResult = <span className="label label-pending-messages">{pendingMessages}</span>;
+        let pendingMessages = this.props.state.pendingMessages[this.props.channel.name] || {};
+        let classNames = ['label', 'label_pending_messages'];
+        if (pendingMessages.important) {
+            classNames.push('label-warning');
+        }
+        if (pendingMessages.value) {
+            pendingMessagesResult = <span className={classNames.join(' ')}>{pendingMessages.value}</span>;
         }
         return (
             <div

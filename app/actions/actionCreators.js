@@ -46,6 +46,7 @@ export function pendingMessages(data) {
     return {
         type: 'PENDING_MESSAGE_INC',
         channel: data.channel,
-        reset: data.reset
+        reset: data.reset,
+        important: data.important
     };
 }

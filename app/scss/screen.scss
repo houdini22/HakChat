@@ -31,9 +31,13 @@ body {
 .label {
   color: #000;
   font-size: 12px;
-  background: lightskyblue;
+  background-color: lightskyblue;
   padding: 3px 5px;
   margin-left: 5px;
+}
+
+.label-warning {
+  background-color: #f0ad4e;
 }
 
 input, button {

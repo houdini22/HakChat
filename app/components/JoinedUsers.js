@@ -12,7 +12,7 @@ class JoinedUsersComponent extends React.Component {
     }
 
     componentWillUnmount() {
-        
+
     }
 
     render() {

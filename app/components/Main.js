@@ -1,4 +1,5 @@
 import React from 'react';
+import {hasNickInMessageHelper} from '../helpers/chat-helper';
 
 class Main extends React.Component {
     constructor() {
@@ -22,11 +23,13 @@ class Main extends React.Component {
     }
 
     onMessageReceived(data) {
+        let important = hasNickInMessageHelper(this.props.state.nick, data.message);
         this.props.actions.messageReceived(data);
         this.props.state.channels.forEach((channel) => {
-            if(channel.name !== this.props.params.name) {
+            if (channel.name !== this.props.params.name) {
                 this.props.actions.pendingMessages({
-                    channel: channel.name
+                    channel: channel.name,
+                    important: important
                 });
             } else {
                 this.props.actions.pendingMessages({
@@ -35,6 +38,13 @@ class Main extends React.Component {
                 });
             }
         });
+        if (important) {
+            try {
+                let audio = new Audio('/sounds/notification.mp3');
+                audio.play();
+            } catch (ex) {
+            }
+        }
     }
 
     componentDidMount() {
