@@ -68,6 +68,10 @@ class MessageComponent extends React.Component {
             case 'USER_DISCONNECTED':
                 messageText = `${message.nick} disconnected.`;
                 break;
+
+            case 'USER_LEFT_CHANNEL':
+                messageText = `${message.nick} left channel.`;
+                break;
         }
 
         return (

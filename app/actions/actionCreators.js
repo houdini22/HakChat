@@ -1,11 +1,3 @@
-// users list changed
-export function usersListChanged(users) {
-    return {
-        type: "USERS_LIST_CHANGED",
-        users
-    };
-}
-
 // message received
 export function messageReceived(message) {
     return {
@@ -33,5 +25,27 @@ export function windowState(state) {
     return {
         type: 'WINDOW_STATE',
         state
+    };
+}
+
+export function activeTabClicked(tab) {
+    return {
+        type: 'ACTIVE_TAB_CLICKED',
+        tab
+    };
+}
+
+export function channelsFetched(channels) {
+    return {
+        type: 'CHANNELS_FETCHED',
+        channels
+    };
+}
+
+export function pendingMessages(data) {
+    return {
+        type: 'PENDING_MESSAGE_INC',
+        channel: data.channel,
+        reset: data.reset
     };
 }

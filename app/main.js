@@ -1,4 +1,6 @@
 import {render} from 'react-dom';
+
+import "bootstrap/dist/css/bootstrap.css";
 import "./scss/screen.scss";
 
 import React from 'react';
@@ -7,18 +9,20 @@ import store, {history} from './store';
 
 import {Router, Route, IndexRoute} from 'react-router';
 
-import NotFoundComponent from './components/NotFound';
-import StartScreenComponent from './components/StartScreen';
-import ChatComponent from './components/Chat';
+import MainNotFoundComponent from './components/_MainNotFound';
+import MainStartScreenComponent from './components/_MainStartScreen';
+import MainChatComponent from './components/_MainChat';
 import AppComponent from './components/App';
+import MainChannelsComponent from './components/_MainChannels';
 
 const router = (
     <Provider store={store}>
         <Router history={history} key={new Date()}>
             <Route component={AppComponent} path="/">
-                <IndexRoute component={StartScreenComponent}/>
-                <Route path="/chat" component={ChatComponent }/>
-                <Route path="*" component={NotFoundComponent}/>
+                <IndexRoute component={MainStartScreenComponent}/>
+                <Route path="/channels" component={MainChannelsComponent}/>
+                <Route path="/channel/:name" component={MainChatComponent }/>
+                <Route path="*" component={MainNotFoundComponent}/>
             </Route>
         </Router>
     </Provider>

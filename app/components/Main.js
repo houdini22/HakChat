@@ -21,6 +21,22 @@ class Main extends React.Component {
         }
     }
 
+    onMessageReceived(data) {
+        this.props.actions.messageReceived(data);
+        this.props.state.channels.forEach((channel) => {
+            if(channel.name !== this.props.params.name) {
+                this.props.actions.pendingMessages({
+                    channel: channel.name
+                });
+            } else {
+                this.props.actions.pendingMessages({
+                    channel: channel.name,
+                    reset: true
+                });
+            }
+        });
+    }
+
     componentDidMount() {
         window.onfocus = () => {
             this.isWindowFocused = true;
@@ -31,11 +47,21 @@ class Main extends React.Component {
             this.isWindowFocused = false;
             this.props.socket.on('chat message', this.onChatMessage.bind(this));
         };
+        this.props.socket.on('chat message', this.onMessageReceived.bind(this));
+        this.props.socket.on('system message', this.onMessageReceived.bind(this));
+
+        this.props.socket.on('disconnect', () => {
+            this.props.socket.off('chat message', this.onMessageReceived.bind(this));
+            this.props.socket.off('system message', this.onMessageReceived.bind(this));
+            this.props.router.push('/');
+        });
 
     }
 
     componentWillUnmount() {
         this.props.socket.off('chat message', this.onChatMessage.bind(this));
+        this.props.socket.off('chat message', this.onMessageReceived.bind(this));
+        this.props.socket.off('system message', this.onMessageReceived.bind(this));
     }
 
     render() {

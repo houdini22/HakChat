@@ -14,25 +14,15 @@ class UsersWrapper {
     }
 
     areUserDataCorrect(nick, password) {
-        let res = false;
-        this.users.forEach((userObj) => {
-            if (userObj.nick === nick && userObj.password === password) {
-                res = true;
-                return false;
-            }
+        return !!this.users.find((user) => {
+            return user.nick === nick && user.password === password;
         });
-        return res;
     }
 
     getUserByNick(nick) {
-        let res = null;
-        this.users.forEach((userObj) => {
-            if (userObj.nick === nick) {
-                res = userObj;
-                return false;
-            }
+        return this.users.find((user) => {
+            return user.nick === nick;
         });
-        return res;
     }
 }
 

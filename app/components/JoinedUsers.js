@@ -8,23 +8,25 @@ class JoinedUsersComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.socket.on('users', (users) => {
-            this.props.actions.usersListChanged(users);
-        });
-        this.props.socket.on('disconnect', () => {
-            this.props.socket.off('users');
-        });
+
     }
 
     componentWillUnmount() {
-        this.props.socket.off('users');
+        
     }
 
     render() {
+        let users = [];
+        this.props.state.channels.forEach((obj) => {
+            if (obj.name === this.props.params.name) {
+                users = [...obj.joinedUsers];
+                return false;
+            }
+        });
         return (
             <div className="users-joined">
                 {
-                    this.props.state.usersJoined.map((obj) => {
+                    users.map((obj) => {
                         return <JoinedUserComponent
                             {...this.props}
                             nick={obj.nick}

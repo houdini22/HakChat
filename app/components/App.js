@@ -17,10 +17,12 @@ function mapStateToProps(state) {
     return {
         state: {
             messages: state.messages,
-            usersJoined: state.usersJoined,
             nick: state.nick,
             messageTo: state.messageTo,
-            windowState: state.windowState
+            windowState: state.windowState,
+            channels: state.channels,
+            activeTab: state.activeTab,
+            pendingMessages: state.pendingMessages
         },
         socket,
         store

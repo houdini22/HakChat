@@ -9,8 +9,9 @@ class NewMessageComponent extends React.Component {
 
     sendUserStartsTypingMessage() {
         if (!this.userTyping) {
-            this.props.socket.emit('user start typing', {
-                nick: this.props.state.nick
+            this.props.socket.emit('user starts typing', {
+                nick: this.props.state.nick,
+                channel: this.props.params.name
             });
             this.userTyping = true;
         }
@@ -27,7 +28,8 @@ class NewMessageComponent extends React.Component {
         this.clearUserStopsTypingTimeout();
         this.timeout = setTimeout(() => {
             this.props.socket.emit('user stops typing', {
-                nick: this.props.state.nick
+                nick: this.props.state.nick,
+                channel: this.props.params.name
             });
             this.userTyping = false;
         }, 2000);
@@ -47,7 +49,8 @@ class NewMessageComponent extends React.Component {
 
             this.props.socket.emit('message sent', {
                 nick: this.props.state.nick,
-                message: message
+                message: message,
+                channel: this.props.params.name
             });
 
             this.userTyping = false;
@@ -58,7 +61,7 @@ class NewMessageComponent extends React.Component {
     }
 
     handleChange(e) {
-        const message = e.target.value.trim();
+        const message = e.target.value;
         this.setState({inputValue: message});
         this.sendUserStartsTypingMessage();
     }
@@ -108,6 +111,7 @@ class NewMessageComponent extends React.Component {
                            this.focusInput();
                        }}
                        value={message}
+                       autoFocus
                 />
             </div>
         );
