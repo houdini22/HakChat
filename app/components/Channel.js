@@ -12,6 +12,7 @@ class ChannelComponent extends React.Component {
     }
 
     joinToChannel(name) {
+        this.props.actions.activeTabClicked(name);
         this.props.socket.emit('join channel', {
             channel: name,
             nick: this.props.state.nick
@@ -20,16 +21,6 @@ class ChannelComponent extends React.Component {
         let joinedChannels = this.localeStorageWrapper.getByPath('joined_channels', []);
         joinedChannels.push(name);
         this.localeStorageWrapper.setByPath('joined_channels', joinedChannels).save();
-    }
-
-    componentDidMount() {
-        let joinedChannels = this.localeStorageWrapper.getByPath('joined_channels', []);
-        joinedChannels.forEach((name) => {
-            this.props.socket.emit('join channel', {
-                channel: name,
-                nick: this.props.state.nick
-            });
-        });
     }
 
     leaveFromChannel(name) {

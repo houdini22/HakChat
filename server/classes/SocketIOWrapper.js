@@ -16,29 +16,36 @@ class SocketIOWrapper {
     userJoinedChannel(nick, channelName, additionalFields) {
         let user = this.usersWrapper.getUserByNick(nick);
         let keys = Object.keys(additionalFields);
+        let pushed = false;
         for (let key of keys) {
             user[key] = additionalFields[key];
         }
         this.channels.forEach((channel) => {
             if (channel.name === channelName) {
                 channel.joinedUsers.push(user);
+                pushed = true;
+                return false;
             }
         });
+        if(!pushed) {
+            this.channels.push({
+                name: channelName,
+                joinedUsers: [user]
+            });
+        }
         return this;
     }
 
     userDisconnected(socketId) {
-        let channels = [];
         this.channels.forEach((channel, i) => {
             channel.joinedUsers.forEach((user, j) => {
                 if (user.id === socketId) {
-                    channels.push(channel.name);
                     this.channels[i].joinedUsers.splice(j, 1);
                     return false;
                 }
             });
         });
-        return channels;
+        return this.channels;
     }
 
     userStartsTyping(nick, channelName) {

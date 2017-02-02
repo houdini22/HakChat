@@ -1,11 +1,15 @@
 import React from 'react';
 import {hasNickInMessageHelper} from '../helpers/chat-helper';
 
+import LocaleStorageWrapper from '../classes/LocalStorageWrapper';
+
 class Main extends React.Component {
     constructor() {
         super();
         this.documentTitleChanged = false;
         this.isWindowFocused = true;
+        //this.autoJoin = false;
+        this.localeStorageWrapper = new LocaleStorageWrapper();
     }
 
     onChatMessage() {
@@ -47,6 +51,20 @@ class Main extends React.Component {
         }
     }
 
+    onJoined(data) {
+        /*if(!this.autoJoin) {
+            this.autoJoin = true;
+            let joinedChannels = this.localeStorageWrapper.getByPath('joined_channels', []);
+            joinedChannels.forEach((name) => {
+                this.props.socket.emit('join channel', {
+                    channel: name,
+                    nick: this.props.state.nick
+                });
+                this.props.actions.activeTabClicked(name);
+            });
+        }*/
+    }
+
     componentDidMount() {
         window.onfocus = () => {
             this.isWindowFocused = true;
@@ -59,13 +77,14 @@ class Main extends React.Component {
         };
         this.props.socket.on('chat message', this.onMessageReceived.bind(this));
         this.props.socket.on('system message', this.onMessageReceived.bind(this));
+        this.props.socket.on('joined', this.onJoined.bind(this));
 
         this.props.socket.on('disconnect', () => {
             this.props.socket.off('chat message', this.onMessageReceived.bind(this));
             this.props.socket.off('system message', this.onMessageReceived.bind(this));
+            this.props.socket.off('joined', this.onJoined.bind(this));
             this.props.router.push('/');
         });
-
     }
 
     componentWillUnmount() {
