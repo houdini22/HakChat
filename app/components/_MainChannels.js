@@ -45,6 +45,9 @@ class ChannelsComponent extends React.Component {
 
     _handleValidSubmit(values) {
         this.props.socket.once('channel created', (data) => {
+            this.props.socket.once('joined channel', (data) => {
+                this.props.actions.activeTabClicked(data.name);
+            });
             this.props.socket.emit('join channel', {
                 channel: values.name,
                 nick: this.props.state.nick
