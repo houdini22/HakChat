@@ -18,6 +18,10 @@ class MessagesComponent extends React.Component {
     }
 
     render() {
+        let messages = [];
+        if (this.props.state.messages[this.props.params.name]) {
+            messages = this.props.state.messages[this.props.params.name];
+        }
         return (
             <div className="main-window messages"
                  ref={(input) => {
@@ -25,7 +29,7 @@ class MessagesComponent extends React.Component {
                  }}
             >
                 {
-                    this.props.state.messages[this.props.params.name].map((message, i) => {
+                    messages.map((message, i) => {
                         return <MessageComponent
                             {...this.props}
                             message={message}

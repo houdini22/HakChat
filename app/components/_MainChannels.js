@@ -43,13 +43,16 @@ class ChannelsComponent extends React.Component {
         this.props.router.push(`/channel/${data.name}`);
     }
 
-    handleAddNewChannel(e) {
-        e.preventDefault();
-        console.log(this.inputNewChannel.value.trim());
-    }
-
     _handleValidSubmit(values) {
-
+        this.props.socket.once('channel created', (data) => {
+            this.props.socket.emit('join channel', {
+                channel: values.name,
+                nick: this.props.state.nick
+            });
+        });
+        this.props.socket.emit('create channel', {
+            name: values.name
+        });
     }
 
     _handleInvalidSubmit(errors, values) {
@@ -131,7 +134,7 @@ class ChannelsComponent extends React.Component {
                                     <div className="col-md-8">
                                         <ValidatedInput
                                             type="text"
-                                            name="channel_name"
+                                            name="name"
                                             validate="required"
                                             errorHelp={{
                                                 required: "Channel Name is required."

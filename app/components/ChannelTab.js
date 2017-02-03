@@ -3,9 +3,6 @@ import React from 'react';
 class ChannelTabComponent extends React.Component {
     constructor() {
         super();
-        this.state = {
-            active: false
-        };
     }
 
     handleUserClick(e) {
@@ -23,7 +20,7 @@ class ChannelTabComponent extends React.Component {
         let classNamesLabel = ['label', 'label-pending-messages'];
         let classNamesTab = ['tab'];
 
-        if (this.props.state.activeTab === this.props.params.name) {
+        if (this.props.state.activeTab === this.props.channel.name) {
             classNamesTab.push('is-active');
         }
 
