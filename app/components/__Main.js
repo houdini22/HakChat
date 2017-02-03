@@ -29,16 +29,16 @@ class Main extends React.Component {
         let important = hasNickInMessageHelper(this.props.state.nick, data.message);
         this.props.actions.messageReceived(data);
         this.props.state.channels.forEach((channel) => {
-            if (channel.name !== this.props.params.name) {
+            if (data.channel === channel.name && data.channel !== this.props.params.name) {
                 this.props.actions.pendingMessages({
                     channel: channel.name,
                     important: important
                 });
             } else {
-                this.props.actions.pendingMessages({
+                /*this.props.actions.pendingMessages({
                     channel: channel.name,
                     reset: true
-                });
+                });*/
             }
         });
         if (important) {

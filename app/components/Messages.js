@@ -11,6 +11,10 @@ class MessagesComponent extends React.Component {
         this.props.socket.emit('get channels', {
             nick: this.props.state.nick
         });
+        this.props.actions.pendingMessages({
+            channel: this.props.params.name,
+            reset: true
+        });
     }
 
     componentDidUpdate() {

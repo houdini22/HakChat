@@ -7,10 +7,6 @@ class ChannelTabComponent extends React.Component {
 
     handleUserClick(e) {
         this.props.router.push(`/channel/${this.props.channel.name}`);
-        this.props.actions.pendingMessages({
-            channel: this.props.channel.name,
-            reset: true
-        });
         this.props.actions.activeTabClicked(this.props.channel.name);
     }
 
