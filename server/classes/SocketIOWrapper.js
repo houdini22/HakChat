@@ -44,6 +44,9 @@ class SocketIOWrapper {
                     return false;
                 }
             });
+            if (channel.joinedUsers.length === 0) {
+                this.channels.splice(i, 1);
+            }
         });
         return this.channels;
     }
@@ -207,7 +210,7 @@ class SocketIOWrapper {
                         name: data.name,
                         nick: data.nick
                     });
-                    helpers.log('INFO:', user.nick, 'creates channel', data.channel, socket.request.connection.remoteAddress);
+                    helpers.log('INFO:', user.nick, 'creates channel', data.name, socket.request.connection.remoteAddress);
                 });
             });
         });

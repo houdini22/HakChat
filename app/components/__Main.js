@@ -34,11 +34,6 @@ class Main extends React.Component {
                     channel: channel.name,
                     important: important
                 });
-            } else {
-                /*this.props.actions.pendingMessages({
-                    channel: channel.name,
-                    reset: true
-                });*/
             }
         });
         if (important) {
