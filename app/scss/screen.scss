@@ -103,8 +103,8 @@ input, button:not(.btn) {
     input {
       width: calc(100% - 20px);
       border: 0 none;
-      height: 35px;
-      line-height: 35px;
+      height: 34px;
+      line-height: 34px;
     }
   }
   .main-window {
@@ -196,6 +196,11 @@ input, button:not(.btn) {
                 width: 100%;
                 height: 30px;
                 line-height: 30px;
+              }
+              .help-block {
+                margin: 0;
+                height: 20px;
+                line-height: 20px;
               }
             }
           }
