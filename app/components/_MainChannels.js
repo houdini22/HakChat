@@ -9,10 +9,6 @@ import {Form, ValidatedInput} from 'react-bootstrap-validation';
 class ChannelsComponent extends React.Component {
     constructor() {
         super();
-        this.state = {
-            channels: []
-        };
-        this.channels = {};
     }
 
     componentDidMount() {
@@ -34,9 +30,7 @@ class ChannelsComponent extends React.Component {
     }
 
     onSocketChannels(channels) {
-        this.setState({
-            channels
-        });
+        this.props.actions.channelsFetched(channels);
     }
 
     onSocketJoinedChannel(data) {
@@ -68,7 +62,7 @@ class ChannelsComponent extends React.Component {
 
     render() {
         let noJoinedChannels;
-        this.state.channels.map((obj, i) => {
+        this.props.state.channels.map((obj, i) => {
             noJoinedChannels = !obj.joinedUsers.find((user) => {
                 return user.nick === this.props.state.nick;
             });
@@ -78,7 +72,7 @@ class ChannelsComponent extends React.Component {
             joinedChannels = (
                 <ul className="item-grid">
                     {
-                        this.state.channels.map((obj, i) => {
+                        this.props.state.channels.map((obj, i) => {
                             let joined = obj.joinedUsers.find((user) => {
                                 return user.nick === this.props.state.nick;
                             });
@@ -171,7 +165,7 @@ class ChannelsComponent extends React.Component {
                         <h3>All Channels</h3>
                         <ul className="item-grid">
                             {
-                                this.state.channels.map((obj, i) => {
+                                this.props.state.channels.map((obj, i) => {
                                     let joined = obj.joinedUsers.find((user) => {
                                         return user.nick === this.props.state.nick;
                                     });
