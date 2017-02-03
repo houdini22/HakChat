@@ -8,7 +8,6 @@ class Main extends React.Component {
         super();
         this.documentTitleChanged = false;
         this.isWindowFocused = true;
-        //this.autoJoin = false;
         this.localeStorageWrapper = new LocaleStorageWrapper();
     }
 
@@ -52,17 +51,7 @@ class Main extends React.Component {
     }
 
     onJoined(data) {
-        /*if(!this.autoJoin) {
-            this.autoJoin = true;
-            let joinedChannels = this.localeStorageWrapper.getByPath('joined_channels', []);
-            joinedChannels.forEach((name) => {
-                this.props.socket.emit('join channel', {
-                    channel: name,
-                    nick: this.props.state.nick
-                });
-                this.props.actions.activeTabClicked(name);
-            });
-        }*/
+
     }
 
     componentDidMount() {

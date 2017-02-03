@@ -4,6 +4,8 @@ import ChannelComponent from './Channel';
 import ChannelTabComponent from './ChannelTab';
 import ChannelsTabComponent from './ChannelsTab';
 
+import {Form, ValidatedInput} from 'react-bootstrap-validation';
+
 class ChannelsComponent extends React.Component {
     constructor() {
         super();
@@ -18,24 +20,40 @@ class ChannelsComponent extends React.Component {
             this.props.router.push("/");
         }
 
-        this.props.socket.on('channels', (data) => {
-            this.setState({
-                channels: data
-            });
-        });
-        this.props.socket.on('joined channel', this.onJoinedChannel.bind(this));
+        this.props.socket.on('channels', this.onSocketChannels.bind(this));
+        this.props.socket.on('joined channel', this.onSocketJoinedChannel.bind(this));
+
         this.props.socket.emit('get channels', {
             nick: this.props.state.nick
         });
     }
 
     componentWillUnmount() {
-        this.props.socket.off('channels');
-        this.props.socket.off('joined channel', this.onJoinedChannel.bind(this));
+        this.props.socket.off('channels', this.onSocketChannels.bind(this));
+        this.props.socket.off('joined channel', this.onSocketJoinedChannel.bind(this));
     }
 
-    onJoinedChannel(data) {
+    onSocketChannels(channels) {
+        this.setState({
+            channels
+        });
+    }
+
+    onSocketJoinedChannel(data) {
         this.props.router.push(`/channel/${data.name}`);
+    }
+
+    handleAddNewChannel(e) {
+        e.preventDefault();
+        console.log(this.inputNewChannel.value.trim());
+    }
+
+    _handleValidSubmit(values) {
+
+    }
+
+    _handleInvalidSubmit(errors, values) {
+
     }
 
     render() {
@@ -103,7 +121,39 @@ class ChannelsComponent extends React.Component {
                     className="main-window channels"
                 >
                     <section>
-                        <h3>Your channels</h3>
+                        <h3>Add Channel</h3>
+                        <Form
+                            onValidSubmit={this._handleValidSubmit.bind(this)}
+                            onInvalidSubmit={this._handleInvalidSubmit.bind(this)}
+                        >
+                            <ul className="item-grid">
+                                <li className="row">
+                                    <div className="col-md-8">
+                                        <ValidatedInput
+                                            type="text"
+                                            name="channel_name"
+                                            validate="required"
+                                            errorHelp={{
+                                                required: "Channel Name is required."
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="col-md-2"></div>
+                                    <div className="col-md-2">
+                                        <button
+                                            type="submit"
+                                            className="btn btn-default btn-sm"
+                                        >
+                                            Add Channel
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </Form>
+                    </section>
+
+                    <section>
+                        <h3>Your Channels</h3>
                         {joinedChannels}
                     </section>
 

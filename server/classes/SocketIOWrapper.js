@@ -8,7 +8,7 @@ class SocketIOWrapper {
         this.usersWrapper = new UsersWrapper();
         this.joinedUsers = [];
         this.channels = [{
-            name: 'main',
+            name: 'general',
             joinedUsers: []
         }];
     }
@@ -83,6 +83,9 @@ class SocketIOWrapper {
                         return false;
                     }
                 });
+                if(channel.joinedUsers.length === 0 && channel.name !== 'general') {
+                    this.channels.splice(i, 1);
+                }
             }
         });
     }
@@ -103,6 +106,14 @@ class SocketIOWrapper {
             result[i] = clone;
         });
         return result;
+    }
+
+    userCreatesChannel(data) {
+        this.channels.push({
+            name: data.name,
+            joinedUsers: []
+        });
+        return this;
     }
 
     bindEvents() {
@@ -156,6 +167,7 @@ class SocketIOWrapper {
                     socket.removeAllListeners('user stops typing');
                     socket.removeAllListeners('get channels');
                     socket.removeAllListeners('leave channel');
+                    socket.removeAllListeners('create channel');
                     socket.removeAllListeners('disconnect');
                 });
 
@@ -187,7 +199,12 @@ class SocketIOWrapper {
                     });
                     this.io.emit('channels', this.getChannels(data.nick));
                     helpers.log('INFO:', user.nick, 'leaves channel', data.channel, socket.request.connection.remoteAddress);
-                })
+                });
+                socket.on('create channel', (data) => {
+                    this.userCreatesChannel(data.name);
+                    this.io.emit('channels', this.getChannels(data.nick));
+                    helpers.log('INFO:', user.nick, 'creates channel', data.channel, socket.request.connection.remoteAddress);
+                });
             });
         });
     }

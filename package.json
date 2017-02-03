@@ -1,5 +1,5 @@
 {
-  "name": "learn-redux",
+  "name": "HakChat",
   "version": "1.0.0",
   "description": ":) ",
   "scripts": {
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/wesbos/Learn-Redux.git"
   },
-  "author": "Wes Bos",
+  "author": "hud",
   "license": "MIT",
   "homepage": "https://github.com/wesbos/Learn-Redux",
   "dependencies": {
@@ -36,6 +36,8 @@
     "raven-js": "^2.1.1",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.0.2",
+    "react-bootstrap": "^0.28.1",
+    "react-bootstrap-validation": "^0.1.11",
     "react-dom": "^15.0.2",
     "react-linkify": "^0.1.3",
     "react-redux": "^4.4.6",

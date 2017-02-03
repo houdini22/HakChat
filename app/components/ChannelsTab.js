@@ -8,7 +8,7 @@ class ChannelsTabComponent extends React.Component {
         };
     }
 
-    handleUserClick(e) {
+    handleUserClick() {
         this.props.actions.activeTabClicked('_CHANNELS_');
         this.props.router.push('/channels');
     }
@@ -22,7 +22,7 @@ class ChannelsTabComponent extends React.Component {
             <div
                 className={classNames.join(' ')}
                 onClick={(e) => {
-                    this.handleUserClick(e);
+                    this.handleUserClick();
                 }}
             >
                 All Channels

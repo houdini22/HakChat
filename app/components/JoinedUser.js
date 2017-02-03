@@ -35,7 +35,7 @@ class JoinedUserComponent extends React.Component {
             >
                 <p>
                     <span className="nick">{this.props.nick}</span>
-                    <span className="ip">{this.props.ip}</span>
+                    {/*<span className="ip">{this.props.ip}</span>*/}
                 </p>
             </div>
         )

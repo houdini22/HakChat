@@ -12,8 +12,8 @@ import {Router, Route, IndexRoute} from 'react-router';
 import MainNotFoundComponent from './components/_MainNotFound';
 import MainStartScreenComponent from './components/_MainStartScreen';
 import MainChatComponent from './components/_MainChat';
-import AppComponent from './components/App';
 import MainChannelsComponent from './components/_MainChannels';
+import AppComponent from './components/__App';
 
 const router = (
     <Provider store={store}>

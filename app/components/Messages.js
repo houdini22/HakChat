@@ -13,10 +13,6 @@ class MessagesComponent extends React.Component {
         });
     }
 
-    componentWillUnmount() {
-
-    }
-
     componentDidUpdate() {
         this.messageDiv.scrollTop = this.messageDiv.scrollHeight;
     }

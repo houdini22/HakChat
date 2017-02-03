@@ -17,28 +17,31 @@ class ChannelTabComponent extends React.Component {
         this.props.actions.activeTabClicked(this.props.channel.name);
     }
 
-    componentDidMount() {
-    }
-
     render() {
         let pendingMessagesResult = '';
         let pendingMessages = this.props.state.pendingMessages[this.props.channel.name] || {};
-        let classNameLabel = ['label', 'label_pending_messages'];
-        let classNames = ['tab'];
+        let classNamesLabel = ['label', 'label-pending-messages'];
+        let classNamesTab = ['tab'];
+
         if (this.props.state.activeTab === this.props.params.name) {
-            classNames.push('is-active');
+            classNamesTab.push('is-active');
         }
-        let style = {};
+
         if (pendingMessages.important) {
-            classNameLabel.push('label-warning');
+            classNamesLabel.push('label-warning');
+        } else {
+            classNamesLabel.push('label-default');
         }
+
+        let style = {};
+
         if (pendingMessages.value) {
             style.fontWeight = 'bold';
-            pendingMessagesResult = <span className={classNameLabel.join(' ')}>{pendingMessages.value}</span>;
+            pendingMessagesResult = <span className={classNamesLabel.join(' ')}>{pendingMessages.value}</span>;
         }
         return (
             <div
-                className={classNames.join(' ')}
+                className={classNamesTab.join(' ')}
                 onClick={(e) => {
                     this.handleUserClick(e);
                 }}

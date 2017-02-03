@@ -11,8 +11,9 @@ class ChannelComponent extends React.Component {
         this.localeStorageWrapper = new LocaleStorageWrapper();
     }
 
-    joinToChannel(name) {
+    handleJoinToChannel(name) {
         this.props.actions.activeTabClicked(name);
+
         this.props.socket.emit('join channel', {
             channel: name,
             nick: this.props.state.nick
@@ -23,7 +24,7 @@ class ChannelComponent extends React.Component {
         this.localeStorageWrapper.setByPath('joined_channels', joinedChannels).save();
     }
 
-    leaveFromChannel(name) {
+    handleLeaveFromChannel(name) {
         this.props.socket.emit('leave channel', {
             channel: name,
             nick: this.props.state.nick
@@ -49,28 +50,32 @@ class ChannelComponent extends React.Component {
             classes.push('has-hover');
         }
 
-        let joinAction = '';
+        let action = '';
         let joined = this.props.joined;
 
         if (!joined) {
-            joinAction = (
+            action = (
                 <a
                     href="#"
                     onClick={(e) => {
                         e.preventDefault();
-                        this.joinToChannel(channel.name)
-                    }}>
+                        this.handleJoinToChannel(channel.name)
+                    }}
+                    className="btn btn-default btn-sm"
+                >
                     Join
                 </a>
             );
         } else {
-            joinAction = (
+            action = (
                 <a
                     href="#"
                     onClick={(e) => {
                         e.preventDefault();
-                        this.leaveFromChannel(channel.name);
-                    }}>
+                        this.handleLeaveFromChannel(channel.name);
+                    }}
+                    className="btn btn-default btn-sm"
+                >
                     Leave
                 </a>
             );
@@ -91,7 +96,7 @@ class ChannelComponent extends React.Component {
                     <div className="col-md-8">{channel.name}</div>
                     <div className="col-md-2">{channel.joinedUsers.length}</div>
                     <div className="col-md-2">
-                        {joinAction}
+                        {action}
                     </div>
                 </div>
             </li>

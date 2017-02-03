@@ -5,7 +5,6 @@ import {hasNickInMessageHelper} from '../helpers/chat-helper';
 class MessageComponent extends React.Component {
     constructor() {
         super();
-        this.soundPlayed = false;
     }
 
     renderChatMessage(message) {
@@ -31,7 +30,8 @@ class MessageComponent extends React.Component {
                     <span className="nick">{message.nick}:</span>
                     <span className="message-content">
                         <Linkify
-                            properties={{target: "_blank"}}>
+                            properties={{target: "_blank"}}
+                        >
                                 {message.message}
                         </Linkify>
                     </span>

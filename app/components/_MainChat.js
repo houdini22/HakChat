@@ -15,17 +15,19 @@ class ChatComponent extends React.Component {
         if (!this.props.socket.connected) {
             this.props.router.push("/");
         }
-        this.props.socket.on('channels', this.onChannels.bind(this));
+
+        this.props.socket.on('channels', this.onSocketChannels.bind(this));
+
         this.props.socket.emit('get channels', {
             nick: this.props.state.nick
         });
     }
 
     componentWillUnmount() {
-        this.props.socket.off('channels', this.onChannels.bind(this));
+        this.props.socket.off('channels', this.onSocketChannels.bind(this));
     }
 
-    onChannels(data) {
+    onSocketChannels(data) {
         this.props.actions.channelsFetched(data);
     }
 

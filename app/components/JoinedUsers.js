@@ -7,14 +7,6 @@ class JoinedUsersComponent extends React.Component {
         super();
     }
 
-    componentDidMount() {
-
-    }
-
-    componentWillUnmount() {
-
-    }
-
     render() {
         let users = [];
         this.props.state.channels.forEach((obj) => {
